@@ -1,0 +1,54 @@
+# Default values for ssh-inlet-tunnel.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+image:
+  repository: minidocks/openssh
+  pullPolicy: IfNotPresent
+
+nameOverride: ""
+fullnameOverride: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+tunnel:
+  user: root
+  endpoint: my.public.endpoint.example.com
+  sshport: 22
+  args:
+    - '-R80:192.168.0.240:80'
+    - '-R443:192.168.0.240:443'
+  moreArgs:
+    - '-oStrictHostKeyChecking=no'
+    - '-oKbdInteractiveAuthentication=no'
+    - '-oPasswordAuthentication=no'
+    - '-oExitOnForwardFailure=yes'
+    - '-oServerAliveInterval=30'
+    - '-N'
+    - '-v'
+  privateKey: ""
+  # "LS0..."
+  # your private key in base64 encoding
+  # `cat id_rsa | base64 -`
+  publicKey: ""
+  # "c3..."
+  # your public key in base64 encoding
+  # `cat id_rsa.pub | base64 -`
+
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

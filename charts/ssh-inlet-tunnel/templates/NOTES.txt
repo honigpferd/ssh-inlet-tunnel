@@ -1,0 +1,29 @@
+NOTE: It may take a few seconds for the ssh-inlet-tunnel to be available.
+      To work as http(s) inlet tunnel Ingress (i.e. ingress-nginx) and a
+      LoadBalancer (i.e. metallb) are needed.
+      Double check to configure `GatewayPorts yes` in `sshd_config` and
+      to add the public ssh key to `~/.ssh/known_hosts` at the endpoint.
+
+
+Watch the tunnel by running these commands:
+    POD=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "ssh-inlet-tunnel.name" .  }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
+    kubectl get --namespace {{ .Release.Namespace }} pod/$POD
+
+Verify the configured tunnels match the existing LoadBalancer IP:
+    {{- with .Values.tunnel.args }}
+    configured tunnels:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    kubectl get services -A --output jsonpath="{.items[*].status.loadBalancer.*[*].ip}"
+
+Dig into the logs by running
+    POD=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "ssh-inlet-tunnel.name" .  }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
+    kubectl logs --namespace {{ .Release.Namespace }} $POD
+
+Inspect the config:
+    POD=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "ssh-inlet-tunnel.name" .  }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
+    kubectl describe --namespace {{ .Release.Namespace }} pod/$POD
+
+Test the inlet tunnel works with Ingress and the LoadBalancer:
+    curl http://{{- .Values.tunnel.endpoint }}
+    curl -k https://{{- .Values.tunnel.endpoint }}
