@@ -1,0 +1,14 @@
+name: Release Helm Charts
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+
+jobs:
+  release-chart:
+    uses: honigpferd/helm-chart-workflow/.github/workflows/helm-chart.yml@v1
