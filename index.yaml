@@ -2,6 +2,19 @@ apiVersion: v1
 entries:
   ssh-inlet-tunnel:
   - apiVersion: v2
+    appVersion: "9"
+    created: "2022-06-04T09:47:44.37993529Z"
+    description: ssh-inlet-tunnel chart for Kubernetes
+    digest: 30eb2e99943e691474e314747ec8987718eac5e09ce68d6b2e137ef97692b10a
+    maintainers:
+    - email: email@example.com
+      name: Name
+    name: ssh-inlet-tunnel
+    type: application
+    urls:
+    - https://github.com/honigpferd/ssh-inlet-tunnel/releases/download/ssh-inlet-tunnel-0.2.0/ssh-inlet-tunnel-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
     appVersion: "8"
     created: "2022-05-30T23:03:47.930951451Z"
     description: ssh-inlet-tunnel chart for Kubernetes
@@ -14,4 +27,4 @@ entries:
     urls:
     - https://github.com/honigpferd/ssh-inlet-tunnel/releases/download/ssh-inlet-tunnel-0.1.0/ssh-inlet-tunnel-0.1.0.tgz
     version: 0.1.0
-generated: "2022-05-30T23:03:47.930954951Z"
+generated: "2022-06-04T09:47:44.380130993Z"
